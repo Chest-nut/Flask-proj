@@ -1,0 +1,36 @@
+.article-info{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.article-info .article-author{
+        margin-right: 15px;
+}
+
+.comment-list{
+    padding-left: 0px;
+}
+
+.comment-list li{
+    list-style: none;
+    border-bottom: 1px solid #eee;
+}
+
+.avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.user-info .username {
+    font-size: 16px;
+    color: #9b9b9b;
+}
+.user-info .create-time{
+    float: right;
+    font-size: 16px;
+    color: #9b9b9b;
+
+}
+.user-info .content{
+    padding-left: 45px;
+}

@@ -1,22 +1,27 @@
-#encoding:utf-8
-# 主app文件
-# 一个简易话题分享讨论平台
+# -*- coding:utf-8 -*-
 
-from flask import Flask,render_template,request,session, redirect, url_for,g
-from exts import db
-from models import User, Article, Comment
-from decorators import login_required
+'''
+主app文件
+'''
+
 from sqlalchemy import or_
+from flask import Flask,render_template,request,session, redirect, url_for,g
+
 import config
+from exts import db
+from decorators import login_required
+from models import User, Article, Comment
+
 
 app = Flask(__name__)
 app.config.from_object(config)
 db.init_app(app)
 
 
-# 首页
 @app.route('/')
 def index():
+    """首页"""
+    
     context ={
         'articles': Article.query.all()
     }
@@ -24,18 +29,21 @@ def index():
     return render_template('index.html', **context)
 
 
-# 搜索功能
 @app.route('/search/')
 def search():
+    """搜索功能"""
+    
     q = request.args.get('q')
     articles = Article.query.filter(or_(Article.title.contains(q), Article.content.contains(q)))
     # 获取文章标题或内容中包含关键字q的记录，并渲染到首页
     return render_template('index.html', articles=articles)
 
 
-# 登录页面
+
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    """登录页面"""
+    
     if request.method == 'GET':
         return render_template('login.html')
     else:
@@ -57,9 +65,10 @@ def login():
             return u'用户不存在'
 
 
-# 注册页面
 @app.route('/regist/', methods=['GET', 'POST'])
 def regist():
+    """注册页面"""
+    
     if request.method == 'GET':
         return render_template('regist.html')
     else:
@@ -82,10 +91,11 @@ def regist():
             return u'该手机号码已注册'
 
 
-# 发表话题页面
 @app.route('/publish/', methods=['GET', 'POST'])
 @login_required
 def publish():
+    """发表话题页面"""
+    
     if request.method == 'GET':
         return render_template('publish.html')
     else:
@@ -98,24 +108,27 @@ def publish():
         return redirect(url_for('index'))
 
 
-# 文章详情页面
 @app.route('/detial/<article_id>')
 def detial(article_id):
+    """文章详情页面"""
+    
     article = Article.query.filter(Article.id==article_id).first()
     return render_template('detial.html', article=article)
 
 
-# 注销功能
 @app.route('/logout/')
 def logout():
+    """注销功能"""
+    
     session.clear()
     return redirect(url_for('login'))
 
 
-# 评论功能
 @app.route('/comment/', methods=['POST'])
 @login_required
 def comment():
+    """评论功能"""
+    
     content = request.form.get('content')
     article_id = request.form.get('article_id')
 

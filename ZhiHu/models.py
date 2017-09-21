@@ -1,12 +1,18 @@
-#encoding:utf-8
-# 数据库表模型文件
+# -*- coding:utf-8 -*-
 
-from exts import db
+"""
+该模块用于管理ORM对象模型
+"""
+
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# 用户表模型
+from exts import db
+
+
 class User(db.Model):
+    """用户表模型"""
+    
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     telephone = db.Column(db.String(11),nullable=False)
@@ -28,8 +34,9 @@ class User(db.Model):
         return check_password_hash(self.password, raw_password)
 
 
-# 文章表模型
 class Article(db.Model):
+    """文章表模型"""
+    
     __tablename__ = 'article'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(30), nullable=False)
@@ -41,8 +48,9 @@ class Article(db.Model):
     author = db.relationship('User', backref = db.backref('articles'))
 
 
-# 用户评论表模型
 class Comment(db.Model):
+    """用户评论表模型"""
+    
     __tablename__ = 'comment'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     content = db.Column(db.Text, nullable=False)

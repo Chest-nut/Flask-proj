@@ -1,14 +1,21 @@
-# 配置文件
+# -*- coding:utf-8 -*-
 
-#encoding:utf-8
+"""
+配置文件
+
+
+这里包含session所需的盐，以及数据库相关配置
+"""
+
 
 import os
 
 from flask import session
 
-SECRET_KEY = os.urandom(24)
 
-DEBUG = True
+SECRET_KEY = os.urandom(24)     # 盐
+
+# DEBUG = True
 
 DIALECT = 'mysql'
 DRIVER = 'mysqldb'
